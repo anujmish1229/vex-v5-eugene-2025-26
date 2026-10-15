@@ -1,4 +1,4 @@
-# Eugene: VEX V5 Robotics Autonomous Code (2025–26)
+# Eugene: VEX V5 Robotics Code (2025–26)
 
 Autonomous and driver-control programs for **Eugene**, Pickering High School's VEX V5 robot in the 2025–26 VEX V5 Robotics Competition season. Eugene placed **1st at the Skills Ontario Durham Regional** and advanced to Provincials.
 
@@ -18,17 +18,27 @@ All programs are written in Python in VEXcode V5.
 
 ## Programs
 
-| File | VEXcode slot | What it does | Status |
-| ---- | ------------ | ------------ | ------ |
-| `gharwala` | 1 | **Full skills route.** Collects and scores at several goals, re-aligning with the distance sensor between moves. 50% speed. | Most complete |
-| `akela_bhediya` | 2 | Left-side match autonomous: three-goal route. | Draft; its saved device list is empty, so devices must be re-added in VEXcode |
-| `trumpy` | 3 | Left-side autonomous plus pneumatic double-park / claw helpers for driver control. | Work in progress; doesn't compile as saved |
-| `sleepy_joe` | 4 | Right-side (mirrored) match autonomous. | Needs `print_variable` restored (see file header) |
+| File | Originally named | VEXcode slot | What it does |
+| ---- | ---------------- | ------------ | ------------ |
+| `skills_full_route` | `gharwala` | 1 | **Autonomous skills, full route.** Collects and scores at several goals, re-aligning with the distance sensor between moves. 50% speed. |
+| `auton_left_three_goal` | `akela_bhediya` | 2 | Match autonomous from the left tile: three-goal route. |
+| `auton_left_pneumatics` | `trumpy` | 3 | Left-start autonomous plus pneumatic driver controls (X/B double park, Up/Down claw). |
+| `auton_right` | `sleepy_joe` | 4 | Match autonomous from the right tile (mirror of the left route). |
+
+The programs were renamed from their original nicknames to describe what they do. Each file's header records its original name.
 
 Each program has two files:
 
-- **`.v5python`**: the original VEXcode project (JSON with the code and device configuration). Open this one in VEXcode.
-- **`.py`**: the same Python code extracted for reading on GitHub, with comments explaining each routine and any known issues. The code is identical to the `.v5python`; only comments were added.
+- **`.v5python`**: the VEXcode project (JSON with the code and device configuration). Open this one in VEXcode.
+- **`.py`**: the same Python code extracted for reading on GitHub, with comments explaining each routine. The code is identical to the `.v5python`; only comments were added.
+
+### Fixes (October 2026)
+
+Three of the original projects would not have run as saved. All four now compile and pass a check that every name they use is defined:
+
+- `auton_left_three_goal`: the saved device list was empty, so the motors and sensors were never created. It now uses the same device config as the other programs.
+- `auton_right`: restored the missing `print_variable()` debug helper that startup code depended on.
+- `auton_left_pneumatics`: finished the half-written `crabClaw()` (syntax error), switched button checks to the VEX API's `controller_1.buttonX.pressing()` form, called the pneumatics helpers from the driver-control loop, and restored `print_variable()`.
 
 ## How the code works
 
@@ -50,5 +60,5 @@ I wrote and tuned the autonomous routines and the driver-control setup in VEXcod
 2. Clone or download this repository.
 3. In VEXcode: **File → Open** and choose a `.v5python` file. Don't open the `.py` files; they lack the device configuration.
 4. Connect the V5 Brain (or the controller paired to it) over USB.
-5. Pick the slot in the toolbar (the files above default to slots 1–4) and click **Download**.
+5. Pick the slot in the toolbar (the programs above default to slots 1–4) and click **Download**.
 6. Run it from the Brain's Programs screen, or under competition control with a field controller or competition switch.
