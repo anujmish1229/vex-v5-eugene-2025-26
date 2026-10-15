@@ -13,7 +13,7 @@ All programs are written in Python in VEXcode V5.
 | Intake      | 1 motor (port 9) that collects blocks                           |
 | Output      | 1 motor (port 10), scoring roller                               |
 | Alignment   | Distance sensor (port 6), used to line up on walls and goals    |
-| Pneumatics  | Piston on 3-wire port H (only in `trumpy`, work in progress)    |
+| Pneumatics  | Piston on 3-wire port H (used by `auton_left_pneumatics`)       |
 | Controller  | Split arcade drive; shoulder buttons run the intake and output  |
 
 ## Programs
@@ -47,7 +47,7 @@ Every program follows the VEXcode competition template:
 1. **Generated configuration** (`#region VEXcode Generated Robot Configuration`): device objects, plus a background thread that maps the controller joysticks to the drivetrain and the shoulder buttons to the intake and output motors.
 2. **`pre_autonomous()`** sets motor torque and speed and the starting heading.
 3. **`autonomous()`** is the scripted route. Instead of driving fixed distances only, the routes use loops like `while dis.object_distance(INCHES) < 26: pass` to stop at a measured distance from a wall or goal, which makes them less sensitive to wheel slip. Short `intake.spin(REVERSE)` pulses clear jammed blocks.
-4. **`user_control()`** keeps the program alive while the generated thread handles driving.
+4. **`user_control()`** keeps the program alive while the generated thread handles driving (and, in `auton_left_pneumatics`, polls the piston buttons).
 5. **`Competition(user_control, autonomous)`** hands both routines to the field controller.
 
 ## My role
